@@ -1,0 +1,37 @@
+= simple-presenters
+
+http://fury-badge.herokuapp.com/rb/simple-presenters.png
+
+{<img src="https://travis-ci.org/aosmith/simple-presenters.png?branch=master" />}[https://travis-ci.org/aosmith/simple-presenters?branch=master]
+
+== Usage
+
+<b>Include SimplePresenters::Presenter in your presenter:</b>
+
+  module UserPresenter
+    include SimplePresenters::Presenter
+
+    def default
+      [:name, :email]
+    end
+  end
+
+<b>Include your presenter in your model:</b>
+
+  class User < ActiveRecord::Base
+    include UserPresenter
+    ...
+  end
+
+
+== Protecting Attributes
+
+<b>Add a class method on your model called filtered_parameters:</b>
+
+  class User < ActiveRecord::Base
+    include UserPresenter
+
+    def self.filtered_parameters
+      [:authentication_token, :password_digest, :salt]
+    end
+  end
