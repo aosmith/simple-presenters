@@ -26,7 +26,7 @@ module SimplePresenters
       def process_value value
         value = if defined?(ActiveRecord) and value.is_a? ActiveRecord::Base
           if value.respond_to? @format.to_sym and value.respond_to? :present_as
-            value.present_as format.to_sym
+            value.present_as @format.to_sym
           elsif value.respond_to? :default and value.respond_to? :present_as
             value.present_as :default
           else
