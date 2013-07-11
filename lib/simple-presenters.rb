@@ -30,7 +30,7 @@ module SimplePresenters
           elsif value.respond_to? :default and value.respond_to? :present_as
             value.present_as :default
           else
-            value.class.send(:include, Mantra::Presenters::Presenter)
+            value.class.send(:include, SimplePresenters::Presenter)
             value.present_as :default
           end
         else
@@ -40,9 +40,9 @@ module SimplePresenters
 
       def filtered_params
         params = []
-  #      unless Rails.nil?
-  #        params += Rails.application.config.filter_parameters
-  #      end
+#        if defined?(Rails)
+#          params += Rails.application.config.filter_parameters
+#        end
         if self.class.respond_to? :filtered_parameters
           params += self.class.filtered_parameters
         end
