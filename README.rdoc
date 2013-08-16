@@ -35,3 +35,7 @@ http://fury-badge.herokuapp.com/rb/simple-presenters.png
       [:authentication_token, :password_digest, :salt]
     end
   end
+
+
+=== Notes for version 0.0.5
+Added / Fixed functionality around arrays.
