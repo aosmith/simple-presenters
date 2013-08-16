@@ -24,17 +24,21 @@ module SimplePresenters
       private
 
       def process_value value
-        value = if defined?(ActiveRecord) and value.is_a? ActiveRecord::Base
-          if value.respond_to? @format.to_sym and value.respond_to? :present_as
-            value.present_as @format.to_sym
-          elsif value.respond_to? :default and value.respond_to? :present_as
-            value.present_as :default
-          else
-            value.class.send(:include, SimplePresenters::Presenter)
-            value.present_as :default
-          end
+        if value.is_a? Array
+          value.collect{ |v| process_value v }
         else
-          value
+          value = if defined?(ActiveRecord) and value.is_a? ActiveRecord::Base
+            if value.respond_to? @format.to_sym and value.respond_to? :present_as
+              value.present_as @format.to_sym
+            elsif value.respond_to? :default and value.respond_to? :present_as
+              value.present_as :default
+            else
+              value.class.send(:include, SimplePresenters::Presenter)
+              value.present_as :default
+            end
+          else
+            value
+          end
         end
       end
 
